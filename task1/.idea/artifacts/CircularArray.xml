@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="CircularArray">
+    <output-path>$PROJECT_DIR$/out/artifacts/CircularArray</output-path>
+    <root id="archive" name="task1.jar">
+      <element id="module-output" name="task1" />
+    </root>
+  </artifact>
+</component>

@@ -1,0 +1,88 @@
+Чтобы решить задачу минимизации количества движений для приведения всех элементов массива к одному числу, вам необходимо:
+
+    Считать массив целых чисел из файла.
+    Найти оптимальное число, к которому нужно привести все элементы массива. В этом случае, оптимальным числом будет медиана массива.
+    Рассчитать минимальное количество движений, необходимых для приведения всех элементов массива к медиане.
+
+Вот пример кода на Java, который выполняет эти шаги:
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Arrays;
+
+public class MinMovesToEqualArray {
+    public static void main(String[] args) {
+        if (args.length != 1) {
+            System.out.println("Usage: java MinMovesToEqualArray <inputFile>");
+            return;
+        }
+
+        String inputFilePath = args[0];
+
+        try {
+            int[] nums = readNumbersFromFile(inputFilePath);
+            int minMoves = calculateMinMoves(nums);
+            System.out.println(minMoves);
+        } catch (IOException e) {
+            System.out.println("An error occurred while reading the file: " + e.getMessage());
+        }
+    }
+
+    private static int[] readNumbersFromFile(String filePath) throws IOException {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            return reader.lines().mapToInt(Integer::parseInt).toArray();
+        }
+    }
+
+    private static int calculateMinMoves(int[] nums) {
+        if (nums.length == 0) return 0;
+
+        Arrays.sort(nums);
+        int median = nums[nums.length / 2]; // медиана отсортированного массива
+
+        int minMoves = 0;
+        for (int num : nums) {
+            minMoves += Math.abs(num - median);
+        }
+        return minMoves;
+    }
+}
+
+Пояснение к коду:
+
+    Чтение чисел из файла:
+        Метод readNumbersFromFile считывает все строки из файла, преобразует их в целые числа и возвращает их в виде массива.
+
+    Нахождение медианы:
+        Метод calculateMinMoves сначала сортирует массив, затем находит медиану (среднее значение отсортированного массива). Медиана минимизирует сумму абсолютных отклонений от неё, что делает её оптимальным выбором для этого типа задачи.
+
+    Подсчет минимальных перемещений:
+        Для каждого элемента массива вычисляется абсолютное отклонение от медианы, и эти значения суммируются.
+
+Запуск программы:
+
+    Сохраните код в файл, например, MinMovesToEqualArray.java.
+
+    Компиляция:
+
+    javac MinMovesToEqualArray.java
+
+    Запуск:
+
+    java MinMovesToEqualArray input.txt
+
+    Здесь input.txt — это файл, содержащий список чисел, каждое число на новой строке.
+
+Пример файла input.txt:
+
+1
+10
+2
+9
+
+Ожидаемый вывод:
+
+16
+
+Этот код эффективно находит медиану массива и вычисляет минимальное количество ходов, необходимых для приведения всех элементов к одному числу.
