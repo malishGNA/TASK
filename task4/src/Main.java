@@ -6,7 +6,7 @@ import java.util.Arrays;
 public class Main {
     public static void main(String[] args) {
         if (args.length != 1) {
-            System.out.println("Usage: java MinMovesToEqualArray <inputFile>");
+            System.out.println("Требуется передать <inputFile>");
             return;
         }
 
@@ -17,7 +17,7 @@ public class Main {
             int minMoves = calculateMinMoves(nums);
             System.out.println(minMoves);
         } catch (IOException e) {
-            System.out.println("An error occurred while reading the file: " + e.getMessage());
+            System.out.println("Произошла ошибка при чтении файла: " + e.getMessage());
         }
     }
 
