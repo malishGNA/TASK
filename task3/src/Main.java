@@ -15,15 +15,12 @@ public class Main {
             System.err.println("Требуется передать файлы <values.json> <tests.json> <report.json>");
             System.exit(1);
         }
+
         String valuesFilePath = args[0];
         String testsFilePath = args[1];
         String reportFilePath = args[2];
-
+        ObjectMapper mapper = new ObjectMapper();
         try {
-            // Создаем ObjectMapper
-            ObjectMapper mapper = new ObjectMapper();
-
-            // Читаем values.json
             Map<String, String> values = readValuesFile(mapper, valuesFilePath);
 
             // Читаем tests.json
@@ -33,7 +30,7 @@ public class Main {
             JsonNode reportJson = fillReport(testsTemplate, values);
 
             // Записываем результат в report.json
-            mapper.writerWithDefaultPrettyPrinter().writeValue(new File(reportFilePath), reportJson);
+            writeReport(mapper, reportFilePath, reportJson);
 
             System.out.println("Report успешно создан.");
 
@@ -82,5 +79,12 @@ public class Main {
                 }
             }
         }
+    }
+    private static void writeReport(ObjectMapper mapper, String reportFilePath, JsonNode reportJson) throws IOException {
+        File file = new File(reportFilePath);
+        if (!file.exists() && !file.createNewFile()) {
+            throw new IOException("Не удалось создать файл отчета.");
+        }
+        mapper.writerWithDefaultPrettyPrinter().writeValue(file, reportJson);
     }
 }
